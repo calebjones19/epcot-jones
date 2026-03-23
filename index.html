@@ -469,6 +469,31 @@
   .tab-btn:not(.active):hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
+
+  /* ── WAIT TIMES ── */
+  .wait-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px; font-size: 12px; color: var(--muted);
+  }
+  .wait-refresh {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 20px; padding: 5px 12px;
+    font-size: 12px; color: var(--muted); cursor: pointer;
+    font-family: inherit; transition: color 0.15s;
+  }
+  .wait-refresh:hover { color: var(--text); }
+  .wait-refresh.spinning { animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .wait-badge {
+    font-size: 11px; font-weight: 700; padding: 3px 8px;
+    border-radius: 10px; white-space: nowrap; margin-top: 4px;
+  }
+  .wait-low  { background: rgba(63,185,80,0.15);  color: #3fb950; }
+  .wait-mid  { background: rgba(240,165,0,0.15);  color: #f0a500; }
+  .wait-high { background: rgba(248,81,73,0.15);  color: #f85149; }
+  .wait-closed { background: rgba(139,148,158,0.15); color: var(--muted); }
+  .card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
 </style>
 </head>
 <body>
@@ -797,11 +822,16 @@
     <div class="section-line"></div>
     <span class="section-count" id="checklist-count">9 total</span>
   </div>
-  <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Tap any attraction to mark it done.</p>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Tap any attraction to mark it done.</p>
+
+  <div class="wait-bar">
+    <span id="wait-updated" style="font-size:11px;">Wait times not loaded yet</span>
+    <button class="wait-refresh" id="wait-refresh-btn" onclick="fetchWaitTimes()">↻ Refresh</button>
+  </div>
 
   <div id="attraction-list">
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="remy" onclick="toggleDone(this)">
       <div class="card-icon">🐭</div>
       <div class="card-body">
         <div class="card-title">Remy's Ratatouille Adventure</div>
@@ -814,7 +844,7 @@
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="frozen" onclick="toggleDone(this)">
       <div class="card-icon">❄️</div>
       <div class="card-body">
         <div class="card-title">Frozen Ever After</div>
@@ -828,7 +858,7 @@
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="spaceship" onclick="toggleDone(this)">
       <div class="card-icon">🌐</div>
       <div class="card-body">
         <div class="card-title">Spaceship Earth</div>
@@ -841,7 +871,7 @@
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="journey" onclick="toggleDone(this)">
       <div class="card-icon">💧</div>
       <div class="card-body">
         <div class="card-title">Journey of Water — Moana</div>
@@ -854,7 +884,7 @@
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="land" onclick="toggleDone(this)">
       <div class="card-icon">🌿</div>
       <div class="card-body">
         <div class="card-title">Living with the Land</div>
@@ -867,7 +897,7 @@
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="mission" onclick="toggleDone(this)">
       <div class="card-icon">🛸</div>
       <div class="card-body">
         <div class="card-title">Mission: SPACE</div>
@@ -880,7 +910,7 @@
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="guardians" onclick="toggleDone(this)">
       <div class="card-icon">🚀</div>
       <div class="card-body">
         <div class="card-title">Guardians of the Galaxy: Cosmic Rewind</div>
@@ -894,7 +924,7 @@
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="soarin" onclick="toggleDone(this)">
       <div class="card-icon">🌍</div>
       <div class="card-body">
         <div class="card-title">Soarin' Around the World</div>
@@ -907,7 +937,7 @@
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
 
-    <div class="card" onclick="toggleDone(this)">
+    <div class="card" data-ride="testtrack" onclick="toggleDone(this)">
       <div class="card-icon">🏎</div>
       <div class="card-body">
         <div class="card-title">Test Track</div>
@@ -1066,6 +1096,87 @@ function switchTab(name, btn) {
   document.getElementById('tab-panel-' + name).classList.add('active');
   btn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (name === 'rides') fetchWaitTimes();
+}
+
+// ── Live Wait Times ─────────────────────────
+const RIDE_MAP = {
+  remy:       s => s.includes('remy'),
+  frozen:     s => s.includes('frozen'),
+  spaceship:  s => s.includes('spaceship earth'),
+  journey:    s => s.includes('journey of water'),
+  land:       s => s.includes('living with the land'),
+  mission:    s => s.includes('mission: space') || s.includes('mission space'),
+  guardians:  s => s.includes('guardians'),
+  soarin:     s => s.includes('soarin'),
+  testtrack:  s => s.includes('test track'),
+};
+
+let waitRefreshTimer = null;
+
+async function fetchWaitTimes() {
+  const btn = document.getElementById('wait-refresh-btn');
+  const updated = document.getElementById('wait-updated');
+  if (btn) { btn.textContent = '↻ Loading…'; btn.disabled = true; }
+
+  try {
+    const res = await fetch('https://api.themeparks.wiki/v1/entity/47f90d2c-e191-4239-a466-5892ef59a88b/live');
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    const live = data.liveData || [];
+
+    // Build a lookup: rideKey → wait info
+    const waitLookup = {};
+    for (const [key, matchFn] of Object.entries(RIDE_MAP)) {
+      const match = live.find(r => matchFn(r.name.toLowerCase()));
+      if (match) {
+        const wait = match.queue?.STANDBY?.waitTime;
+        const status = match.status;
+        waitLookup[key] = { wait, status };
+      }
+    }
+
+    // Update each card
+    document.querySelectorAll('#attraction-list .card[data-ride]').forEach(card => {
+      const key = card.dataset.ride;
+      const info = waitLookup[key];
+      const right = card.querySelector('.card-right');
+      if (!right) return;
+
+      // Remove old badge if present
+      const old = right.querySelector('.wait-badge');
+      if (old) old.remove();
+
+      if (!info) return;
+
+      const badge = document.createElement('div');
+      badge.className = 'wait-badge';
+
+      if (info.status === 'CLOSED' || info.status === 'REFURBISHMENT') {
+        badge.textContent = 'Closed';
+        badge.classList.add('wait-closed');
+      } else if (info.wait === null || info.wait === undefined) {
+        badge.textContent = 'No wait';
+        badge.classList.add('wait-low');
+      } else {
+        badge.textContent = info.wait + ' min';
+        badge.classList.add(info.wait < 20 ? 'wait-low' : info.wait < 45 ? 'wait-mid' : 'wait-high');
+      }
+      right.appendChild(badge);
+    });
+
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    if (updated) updated.textContent = `Updated ${now}`;
+
+    // Auto-refresh every 5 min
+    if (waitRefreshTimer) clearTimeout(waitRefreshTimer);
+    waitRefreshTimer = setTimeout(fetchWaitTimes, 5 * 60 * 1000);
+
+  } catch (e) {
+    if (updated) updated.textContent = 'Could not load wait times';
+  } finally {
+    if (btn) { btn.textContent = '↻ Refresh'; btn.disabled = false; }
+  }
 }
 
 // ── State ──────────────────────────────────
