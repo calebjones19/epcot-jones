@@ -244,13 +244,12 @@
 
   /* ── Progress ── */
   .progress-wrap {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 16px 18px; margin-bottom: 28px;
+    padding: 18px 24px 0; margin-top: 20px;
   }
   .progress-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px; }
-  .progress-label { font-weight: 600; }
-  .progress-frac  { color: var(--muted); }
-  .progress-track { height: 6px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .progress-label { font-weight: 700; color: rgba(255,255,255,0.9); }
+  .progress-frac  { color: rgba(255,255,255,0.65); }
+  .progress-track { height: 7px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
   .progress-fill  { height: 100%; background: linear-gradient(90deg, var(--ll-multi), var(--accent2)); border-radius: 4px; transition: width 0.4s ease; }
 
   /* ── Family row ── */
@@ -505,9 +504,6 @@
   <div class="hero-eyebrow">✦ Wednesday, March 25, 2026 ✦</div>
   <h1>EPCOT Day<br><em>Jones Family</em></h1>
   <p class="hero-sub">Park Hours 9 AM – 9 PM · Early Entry 8:30 AM</p>
-</header>
-
-<main class="container">
 
   <!-- ─── PROGRESS ─── -->
   <div class="progress-wrap">
@@ -519,6 +515,9 @@
       <div class="progress-fill" id="progress-fill" style="width:0%"></div>
     </div>
   </div>
+</header>
+
+<main class="container">
 
   <!-- ─── TABS ─── -->
   <nav class="tab-bar" id="tab-bar">
