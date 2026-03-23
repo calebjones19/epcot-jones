@@ -446,6 +446,29 @@
     #chat-panel { bottom: 80px; right: 12px; left: 12px; width: auto; }
     #chat-fab { right: 16px; bottom: 20px; }
   }
+
+  /* ── TABS ── */
+  .tab-bar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; gap: 6px;
+    background: var(--bg);
+    padding: 10px 20px 10px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; margin-bottom: 20px;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0; padding: 7px 15px;
+    border-radius: 20px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    font-family: inherit; transition: all 0.15s; white-space: nowrap;
+  }
+  .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 700; }
+  .tab-btn:not(.active):hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
 </style>
 </head>
 <body>
@@ -487,6 +510,17 @@
       <div class="progress-fill" id="progress-fill" style="width:0%"></div>
     </div>
   </div>
+
+  <!-- ─── TABS ─── -->
+  <nav class="tab-bar" id="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('ll', this)">⚡ Lightning Lane</button>
+    <button class="tab-btn" onclick="switchTab('schedule', this)">📅 Schedule</button>
+    <button class="tab-btn" onclick="switchTab('rides', this)">🎢 Rides</button>
+    <button class="tab-btn" onclick="switchTab('tips', this)">💡 Tips</button>
+  </nav>
+
+  <!-- ─── TAB: LIGHTNING LANE ─── -->
+  <div id="tab-panel-ll" class="tab-panel active">
 
   <!-- ─── LIGHTNING LANE ─── -->
   <div class="section-header">
@@ -591,6 +625,11 @@
       </div>
     </div>
   </div>
+
+  </div><!-- /tab-panel-ll -->
+
+  <!-- ─── TAB: SCHEDULE ─── -->
+  <div id="tab-panel-schedule" class="tab-panel">
 
   <!-- ─── DAY SCHEDULE ─── -->
   <div class="section-header">
@@ -753,6 +792,11 @@
 
   </div>
 
+  </div><!-- /tab-panel-schedule -->
+
+  <!-- ─── TAB: RIDES ─── -->
+  <div id="tab-panel-rides" class="tab-panel">
+
   <!-- ─── ATTRACTION CHECKLIST ─── -->
   <div class="section-header">
     <span class="section-title">Attraction Checklist</span>
@@ -884,6 +928,11 @@
 
   </div>
 
+  </div><!-- /tab-panel-rides -->
+
+  <!-- ─── TAB: TIPS ─── -->
+  <div id="tab-panel-tips" class="tab-panel">
+
   <!-- ─── TIPS ─── -->
   <div class="section-header">
     <span class="section-title">Pro Tips</span>
@@ -921,6 +970,8 @@
       <div class="tip-card-body">Any quick-service location will give you free cups of water. Stay hydrated — March can still be warm.</div>
     </div>
   </div>
+
+  </div><!-- /tab-panel-tips -->
 
 </main>
 
@@ -1012,6 +1063,15 @@ if (kidsMode) {
       hero.insertAdjacentElement('afterend', banner);
     }
   });
+}
+
+// ── Tabs ───────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-panel-' + name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ── State ──────────────────────────────────
