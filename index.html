@@ -981,6 +981,39 @@
 </div>
 
 <script>
+// ── Kids mode (read-only) ──────────────────
+const kidsMode = new URLSearchParams(window.location.search).has('kids');
+if (kidsMode) {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Hide chat
+    const fab = document.getElementById('chat-fab');
+    const panel = document.getElementById('chat-panel');
+    if (fab) fab.style.display = 'none';
+    if (panel) panel.style.display = 'none';
+
+    // Disable tap-to-mark-done on all cards
+    document.querySelectorAll('#attraction-list .card').forEach(c => {
+      c.style.cursor = 'default';
+      c.onclick = null;
+      c.removeAttribute('onclick');
+    });
+
+    // Hide "Tap any attraction…" hint
+    document.querySelectorAll('p').forEach(p => {
+      if (p.textContent.includes('Tap any attraction')) p.style.display = 'none';
+    });
+
+    // Add a fun kids banner below the hero
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      const banner = document.createElement('div');
+      banner.style.cssText = 'background:rgba(240,165,0,0.12);border:1px solid rgba(240,165,0,0.3);border-radius:12px;padding:12px 16px;margin:0 20px 4px;text-align:center;font-size:13px;color:#f0a500;font-weight:600;';
+      banner.textContent = '🎢 Your EPCOT Day Guide — See you there, Max & Maverick! 🚀';
+      hero.insertAdjacentElement('afterend', banner);
+    }
+  });
+}
+
 // ── State ──────────────────────────────────
 let chatOpen = false;
 let isThinking = false;
