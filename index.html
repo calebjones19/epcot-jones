@@ -196,11 +196,14 @@
 
   /* ── Schedule timeline ── */
   .timeline { position: relative; }
-  .tl-row { display: grid; grid-template-columns: 72px 1fr; gap: 0 16px; margin-bottom: 0; }
+  .tl-row { display: grid; grid-template-columns: 80px 1fr; gap: 0 16px; margin-bottom: 0; }
   .tl-time {
     text-align: right; font-size: 12px; font-weight: 600;
     color: var(--muted); padding-top: 18px; white-space: nowrap;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 2px;
   }
+  .tl-weather { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 3px; justify-content: flex-end; }
+  .tl-weather-rain { font-size: 10px; color: #60a5fa; }
   .tl-col { position: relative; }
   .tl-col::before {
     content: ''; position: absolute;
@@ -639,7 +642,7 @@
   <div class="timeline" id="day-schedule">
 
     <div class="tl-row">
-      <div class="tl-time">8:15 AM</div>
+      <div class="tl-time">8:15 AM<div class="tl-weather">☁️ 68°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">Leave for EPCOT</div>
@@ -649,7 +652,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">9:00 AM</div>
+      <div class="tl-time">9:00 AM<div class="tl-weather">⛅ 70°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">Park Opens — Head to Remy &amp; Frozen</div>
@@ -662,7 +665,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">9:00 AM</div>
+      <div class="tl-time">9:00 AM<div class="tl-weather">⛅ 70°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">Park Open — Spaceship Earth + Journey of Water</div>
@@ -672,7 +675,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">10:00 AM</div>
+      <div class="tl-time">10:00 AM<div class="tl-weather">☁️ 72°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">Mission: SPACE + Figment + Living with the Land</div>
@@ -685,7 +688,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">12:00 PM</div>
+      <div class="tl-time">12:00 PM<div class="tl-weather">☁️ 74°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">Lunch 🍽</div>
@@ -695,7 +698,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">1:10 PM</div>
+      <div class="tl-time">1:10 PM<div class="tl-weather">☁️ 76°F</div></div>
       <div class="tl-col">
         <div class="tl-card" style="border-color:rgba(56,139,253,0.3)">
           <div class="tl-card-title">⚡ Mission: SPACE — LL Window</div>
@@ -708,7 +711,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">2:30 PM</div>
+      <div class="tl-time">2:30 PM<div class="tl-weather">🌦️ 75°F<span class="tl-weather-rain"> 43%</span></div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">World Showcase Loop 🌍</div>
@@ -718,7 +721,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">4:45 PM</div>
+      <div class="tl-time">4:45 PM<div class="tl-weather">☁️ 76°F</div></div>
       <div class="tl-col">
         <div class="tl-card" style="border-color:rgba(240,165,0,0.35)">
           <div class="tl-card-title">🚀 Guardians of the Galaxy: Cosmic Rewind — LL Window</div>
@@ -731,7 +734,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">5:15 PM</div>
+      <div class="tl-time">5:15 PM<div class="tl-weather">⛅ 75°F</div></div>
       <div class="tl-col">
         <div class="tl-card" style="border-color:rgba(56,139,253,0.3)">
           <div class="tl-card-title">🌍 Soarin' Around the World — LL Window</div>
@@ -744,7 +747,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">6:00 PM</div>
+      <div class="tl-time">6:00 PM<div class="tl-weather">🌤️ 75°F</div></div>
       <div class="tl-col">
         <div class="tl-card" style="border-color:rgba(56,139,253,0.3)">
           <div class="tl-card-title">🏎 Test Track — LL Window</div>
@@ -757,7 +760,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">7:00 PM</div>
+      <div class="tl-time">7:00 PM<div class="tl-weather">☀️ 73°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">Dinner + Evening World Showcase</div>
@@ -767,7 +770,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">8:15 PM</div>
+      <div class="tl-time">8:15 PM<div class="tl-weather">☁️ 70°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">🚀 Guardians Standby Attempt #2</div>
@@ -780,7 +783,7 @@
     </div>
 
     <div class="tl-row">
-      <div class="tl-time">9:00 PM</div>
+      <div class="tl-time">9:00 PM<div class="tl-weather">☀️ 68°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
           <div class="tl-card-title">🎆 EPCOT Forever Nighttime Spectacular</div>
