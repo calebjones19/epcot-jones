@@ -33,7 +33,6 @@
     line-height: 1.5;
     min-height: 100vh;
   }
-
   /* ── Hero ── */
   .hero {
     background: linear-gradient(160deg, #00104a 0%, #003087 55%, #001f6e 100%);
@@ -78,10 +77,8 @@
   .badge-gold  { color: var(--accent);    border-color: rgba(240,165,0,0.3);   background: rgba(240,165,0,0.08); }
   .badge-green { color: var(--accent2);   border-color: rgba(63,185,80,0.3);   background: rgba(63,185,80,0.08); }
   .badge-red   { color: var(--warn);      border-color: rgba(248,81,73,0.3);   background: rgba(248,81,73,0.08); }
-
   /* ── Layout ── */
   .container { max-width: 740px; margin: 0 auto; padding: 28px 16px 100px; }
-
   /* ── Section headings ── */
   .section-header {
     display: flex; align-items: center; gap: 10px;
@@ -95,7 +92,6 @@
     background: var(--surface2); border: 1px solid var(--border);
     border-radius: 12px; padding: 2px 9px;
   }
-
   /* ── Cards ── */
   .card {
     background: var(--surface);
@@ -147,7 +143,6 @@
     transition: all 0.15s; flex-shrink: 0;
   }
   .card.done .check-circle { background: var(--accent2); border-color: var(--accent2); color: #fff; }
-
   /* ── LL Schedule ── */
   .ll-block {
     background: var(--surface);
@@ -195,7 +190,6 @@
   .av-erin    { background: rgba(107,52,184,0.12); color: #6b34b8; }
   .av-mav     { background: rgba(212,136,10,0.15); color: #a06800; }
   .av-max     { background: rgba(0,136,58,0.12);   color: #006e2e; }
-
   /* ── Schedule timeline ── */
   .timeline { position: relative; }
   .tl-row { display: grid; grid-template-columns: 90px 1fr; gap: 0 16px; margin-bottom: 0; }
@@ -235,7 +229,6 @@
   .tl-ll-multi  { color: #0048c4; border-color: rgba(0,87,231,0.3); background: rgba(0,87,231,0.07); }
   .tl-ll-single { color: #b36e00; border-color: rgba(212,136,10,0.3); background: rgba(212,136,10,0.07); }
   .tl-highlight { border-color: rgba(240,165,0,0.3) !important; }
-
   /* ── Tips ── */
   .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   @media (max-width: 480px) { .tips-grid { grid-template-columns: 1fr; } }
@@ -246,7 +239,6 @@
   .tip-card-icon { font-size: 20px; margin-bottom: 6px; }
   .tip-card-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
   .tip-card-body  { font-size: 12px; color: var(--muted); line-height: 1.55; }
-
   /* ── Progress ── */
   .progress-wrap {
     padding: 8px 0 0; margin-top: 8px;
@@ -257,7 +249,6 @@
   .progress-frac  { color: rgba(255,255,255,0.65); }
   .progress-track { height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
   .progress-fill  { height: 100%; background: linear-gradient(90deg, var(--ll-multi), var(--accent2)); border-radius: 4px; transition: width 0.4s ease; }
-
   /* ── Family row ── */
   .family-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
   .family-pill {
@@ -270,14 +261,12 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 600; flex-shrink: 0;
   }
-
   /* ── Footer ── */
   .footer {
     text-align: center; padding: 24px 16px;
     font-size: 12px; color: var(--muted);
     border-top: 1px solid var(--border);
   }
-
   /* ═══════════════════════════════════
      CHATBOT
   ═══════════════════════════════════ */
@@ -292,7 +281,6 @@
     transition: transform 0.2s, box-shadow 0.2s;
   }
   #chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(56,139,253,0.55); }
-
   #chat-panel {
     position: fixed; bottom: 86px; right: 20px;
     width: min(420px, calc(100vw - 32px));
@@ -314,7 +302,6 @@
     opacity: 1;
     pointer-events: all;
   }
-
   .chat-header {
     padding: 14px 16px;
     border-bottom: 1px solid var(--border);
@@ -337,7 +324,6 @@
     transition: color 0.15s;
   }
   .chat-close:hover { color: var(--text); }
-
   #chat-messages {
     flex: 1; overflow-y: auto; padding: 16px;
     display: flex; flex-direction: column; gap: 12px;
@@ -346,7 +332,6 @@
   #chat-messages::-webkit-scrollbar { width: 4px; }
   #chat-messages::-webkit-scrollbar-track { background: transparent; }
   #chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
   .msg { display: flex; gap: 8px; align-items: flex-start; }
   .msg.user { flex-direction: row-reverse; }
   .msg-avatar {
@@ -376,7 +361,6 @@
   .msg-bubble p:last-child { margin-bottom: 0; }
   .msg-bubble strong { color: var(--accent); }
   .msg-bubble em { color: var(--ll-multi); font-style: normal; }
-
   .msg-typing .msg-bubble {
     display: flex; align-items: center; gap: 4px; padding: 12px 14px;
   }
@@ -384,7 +368,6 @@
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
-
   .chat-api-notice {
     margin: 8px 16px;
     padding: 10px 12px;
@@ -410,7 +393,6 @@
     color: #fff; font-size: 12px; font-weight: 600;
     padding: 8px 14px; border-radius: 8px; cursor: pointer;
   }
-
   .chat-footer {
     padding: 12px 14px;
     border-top: 1px solid var(--border);
@@ -434,7 +416,6 @@
   }
   #chat-send:hover { background: #1a6ef0; }
   #chat-send:disabled { background: var(--surface2); color: var(--muted); cursor: not-allowed; }
-
   .chat-suggestions {
     display: flex; flex-wrap: wrap; gap: 5px;
     padding: 0 14px 10px;
@@ -447,13 +428,11 @@
     transition: border-color 0.15s, color 0.15s;
   }
   .sug-btn:hover { border-color: rgba(0,87,231,0.35); color: var(--text); }
-
   @media (max-width: 520px) {
     .hero { padding: 32px 16px 24px; }
     #chat-panel { bottom: 80px; right: 12px; left: 12px; width: auto; }
     #chat-fab { right: 16px; bottom: 20px; }
   }
-
   /* ── TABS ── */
   .tab-bar {
     position: sticky; top: 0; z-index: 50;
@@ -474,7 +453,6 @@
   .tab-btn:not(.active):hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
-
   /* ── WAIT TIMES ── */
   .wait-bar {
     display: flex; align-items: center; justify-content: space-between;
@@ -502,17 +480,13 @@
 </style>
 </head>
 <body>
-
 <!-- ─── HERO ─── -->
 <header class="hero">
   <div class="hero-eyebrow">✦ Wednesday, March 25, 2026 ✦</div>
   <h1>EPCOT Day<br><em>Jones Family</em></h1>
   <p class="hero-sub">Park Hours 9 AM – 9 PM</p>
-
 </header>
-
 <main class="container">
-
   <!-- ─── TABS ─── -->
   <nav class="tab-bar" id="tab-bar">
     <button class="tab-btn active" onclick="switchTab('ll', this)">⚡ Lightning Lane</button>
@@ -520,16 +494,13 @@
     <button class="tab-btn" onclick="switchTab('rides', this)">🎢 Rides</button>
     <button class="tab-btn" onclick="switchTab('tips', this)">💡 Tips</button>
   </nav>
-
   <!-- ─── TAB: LIGHTNING LANE ─── -->
   <div id="tab-panel-ll" class="tab-panel active">
-
   <!-- ─── LIGHTNING LANE ─── -->
   <div class="section-header">
     <span class="section-title">Lightning Lane Reservations</span>
     <div class="section-line"></div>
   </div>
-
   <!-- Mission SPACE -->
   <div class="ll-block ll-multi-block">
     <div class="ll-header">
@@ -547,7 +518,6 @@
       </div>
     </div>
   </div>
-
   <!-- Guardians -->
   <div class="ll-block ll-single-block">
     <div class="ll-header">
@@ -565,7 +535,6 @@
       </div>
     </div>
   </div>
-
   <!-- Soarin -->
   <div class="ll-block ll-multi-block">
     <div class="ll-header">
@@ -583,7 +552,6 @@
       </div>
     </div>
   </div>
-
   <!-- Test Track -->
   <div class="ll-block ll-multi-block">
     <div class="ll-header">
@@ -601,7 +569,6 @@
       </div>
     </div>
   </div>
-
   <!-- ─── GUARDIANS SECOND RIDE ─── -->
   <div class="section-header">
     <span class="section-title">Riding Guardians Twice 🚀</span>
@@ -627,30 +594,33 @@
       </div>
     </div>
   </div>
-
   </div><!-- /tab-panel-ll -->
-
   <!-- ─── TAB: SCHEDULE ─── -->
   <div id="tab-panel-schedule" class="tab-panel">
-
   <!-- ─── DAY SCHEDULE ─── -->
   <div class="section-header">
     <span class="section-title">Day Schedule</span>
     <div class="section-line"></div>
   </div>
-
   <div class="timeline" id="day-schedule">
-
     <div class="tl-row">
-      <div class="tl-time">8:15 AM<div class="tl-weather">☁️ 68°F</div></div>
+      <div class="tl-time">7:30 AM<div class="tl-weather">☁️ 66°F</div></div>
       <div class="tl-col">
         <div class="tl-card">
-          <div class="tl-card-title">Leave for EPCOT</div>
-          <div class="tl-card-detail">Park opens at 9 AM. Aim to be at the tapstiles by 8:50 AM.</div>
+          <div class="tl-card-title">🚗 Leave Orange Lake Resort</div>
+          <div class="tl-card-detail">~20 min drive to EPCOT. Aim to be at the parking toll plaza by 7:50 AM and at the tapstiles by 8:50 AM. Have parking payment ready in the My Disney Experience app.</div>
         </div>
       </div>
     </div>
-
+    <div class="tl-row">
+      <div class="tl-time">8:50 AM<div class="tl-weather">☁️ 68°F</div></div>
+      <div class="tl-col">
+        <div class="tl-card">
+          <div class="tl-card-title">Arrive at EPCOT Tapstiles</div>
+          <div class="tl-card-detail">Park opens at 9 AM. Be ready at the gates — Disney often lets the general crowd through a few minutes early.</div>
+        </div>
+      </div>
+    </div>
     <div class="tl-row">
       <div class="tl-time">9:00 AM<div class="tl-weather">⛅ 70°F</div></div>
       <div class="tl-col">
@@ -660,7 +630,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">9:00 AM<div class="tl-weather">⛅ 70°F</div></div>
       <div class="tl-col">
@@ -670,7 +639,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">10:00 AM<div class="tl-weather">☁️ 72°F</div></div>
       <div class="tl-col">
@@ -680,7 +648,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">12:00 PM<div class="tl-weather">☁️ 74°F</div></div>
       <div class="tl-col">
@@ -690,7 +657,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">1:10 PM<div class="tl-weather">☁️ 76°F</div></div>
       <div class="tl-col">
@@ -703,7 +669,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">2:30 PM<div class="tl-weather">🌦️ 75°F<span class="tl-weather-rain"> 43%</span></div></div>
       <div class="tl-col">
@@ -713,7 +678,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">4:45 PM<div class="tl-weather">☁️ 76°F</div></div>
       <div class="tl-col">
@@ -726,7 +690,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">5:15 PM<div class="tl-weather">⛅ 75°F</div></div>
       <div class="tl-col">
@@ -739,7 +702,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">6:00 PM<div class="tl-weather">🌤️ 75°F</div></div>
       <div class="tl-col">
@@ -752,7 +714,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">7:00 PM<div class="tl-weather">☀️ 73°F</div></div>
       <div class="tl-col">
@@ -762,7 +723,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">8:15 PM<div class="tl-weather">☁️ 70°F</div></div>
       <div class="tl-col">
@@ -775,7 +735,6 @@
         </div>
       </div>
     </div>
-
     <div class="tl-row">
       <div class="tl-time">9:00 PM<div class="tl-weather">☀️ 68°F</div></div>
       <div class="tl-col">
@@ -785,14 +744,10 @@
         </div>
       </div>
     </div>
-
   </div>
-
   </div><!-- /tab-panel-schedule -->
-
   <!-- ─── TAB: RIDES ─── -->
   <div id="tab-panel-rides" class="tab-panel">
-
   <!-- ─── ATTRACTION CHECKLIST ─── -->
   <div class="section-header">
     <span class="section-title">Attraction Checklist</span>
@@ -800,14 +755,11 @@
     <span class="section-count" id="checklist-count">9 total</span>
   </div>
   <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Tap any attraction to mark it done.</p>
-
   <div class="wait-bar">
     <span id="wait-updated" style="font-size:11px;">Wait times not loaded yet</span>
     <button class="wait-refresh" id="wait-refresh-btn" onclick="fetchWaitTimes()">↻ Refresh</button>
   </div>
-
   <div id="attraction-list">
-
     <div class="card" data-ride="remy" onclick="toggleDone(this)">
       <div class="card-icon">🐭</div>
       <div class="card-body">
@@ -820,7 +772,6 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
     <div class="card" data-ride="frozen" onclick="toggleDone(this)">
       <div class="card-icon">❄️</div>
       <div class="card-body">
@@ -834,7 +785,6 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
     <div class="card" data-ride="spaceship" onclick="toggleDone(this)">
       <div class="card-icon">🌐</div>
       <div class="card-body">
@@ -847,7 +797,6 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
     <div class="card" data-ride="journey" onclick="toggleDone(this)">
       <div class="card-icon">💧</div>
       <div class="card-body">
@@ -860,7 +809,6 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
     <div class="card" data-ride="land" onclick="toggleDone(this)">
       <div class="card-icon">🌿</div>
       <div class="card-body">
@@ -873,7 +821,6 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
     <div class="card" data-ride="mission" onclick="toggleDone(this)">
       <div class="card-icon">🛸</div>
       <div class="card-body">
@@ -886,7 +833,6 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
     <div class="card" data-ride="guardians" onclick="toggleDone(this)">
       <div class="card-icon">🚀</div>
       <div class="card-body">
@@ -900,7 +846,6 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
     <div class="card" data-ride="soarin" onclick="toggleDone(this)">
       <div class="card-icon">🌍</div>
       <div class="card-body">
@@ -913,7 +858,6 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
     <div class="card" data-ride="testtrack" onclick="toggleDone(this)">
       <div class="card-icon">🏎</div>
       <div class="card-body">
@@ -926,14 +870,10 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-
   </div>
-
   </div><!-- /tab-panel-rides -->
-
   <!-- ─── TAB: TIPS ─── -->
   <div id="tab-panel-tips" class="tab-panel">
-
   <!-- ─── TIPS ─── -->
   <div class="section-header">
     <span class="section-title">Pro Tips</span>
@@ -971,21 +911,16 @@
       <div class="tip-card-body">Any quick-service location will give you free cups of water. Stay hydrated — March can still be warm.</div>
     </div>
   </div>
-
   </div><!-- /tab-panel-tips -->
-
 </main>
-
 <footer class="footer">
   Jones Family · EPCOT · Wednesday, March 25, 2026<br>
   <span style="opacity:0.5">Tap attractions to mark done · Ask the AI assistant below for help</span>
 </footer>
-
 <!-- ═══════════════════════════════════
      CHATBOT
 ════════════════════════════════════ -->
 <button id="chat-fab" onclick="toggleChat()" title="Ask AI for help">✦</button>
-
 <div id="chat-panel">
   <div class="chat-header">
     <div class="chat-header-icon">✦</div>
@@ -995,7 +930,6 @@
     </div>
     <button class="chat-close" onclick="toggleChat()">✕</button>
   </div>
-
   <div id="api-key-section" style="display:none">
     <div class="chat-api-notice">
       <strong>Enter your Anthropic API key</strong> to enable the AI assistant.<br>
@@ -1007,7 +941,6 @@
     </div>
     <div style="height:12px"></div>
   </div>
-
   <div id="chat-messages">
     <div class="msg claude">
       <div class="msg-avatar msg-claude-av">✦</div>
@@ -1018,20 +951,17 @@
       </div>
     </div>
   </div>
-
   <div class="chat-suggestions" id="chat-suggestions">
     <button class="sug-btn" onclick="sendSuggestion(this)">Guardians twice strategy?</button>
     <button class="sug-btn" onclick="sendSuggestion(this)">Add a snack stop</button>
     <button class="sug-btn" onclick="sendSuggestion(this)">Maverick height check</button>
     <button class="sug-btn" onclick="sendSuggestion(this)">Best spot for EPCOT Forever?</button>
   </div>
-
   <div class="chat-footer">
     <textarea id="chat-input" placeholder="Ask anything or say 'add X to the schedule'…" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
     <button id="chat-send" onclick="sendMessage()">➤</button>
   </div>
 </div>
-
 <script>
 // ── Kids mode (read-only) ──────────────────
 const kidsMode = new URLSearchParams(window.location.search).has('kids');
@@ -1042,22 +972,18 @@ if (kidsMode) {
     const panel = document.getElementById('chat-panel');
     if (fab) fab.style.display = 'none';
     if (panel) panel.style.display = 'none';
-
     // Disable tap-to-mark-done on all cards
     document.querySelectorAll('#attraction-list .card').forEach(c => {
       c.style.cursor = 'default';
       c.onclick = null;
       c.removeAttribute('onclick');
     });
-
     // Hide "Tap any attraction…" hint
     document.querySelectorAll('p').forEach(p => {
       if (p.textContent.includes('Tap any attraction')) p.style.display = 'none';
     });
-
     // Hide check circles on ride cards
     document.querySelectorAll('.card-right').forEach(el => el.style.display = 'none');
-
     // Add a fun kids banner below the hero
     const hero = document.querySelector('.hero');
     if (hero) {
@@ -1068,7 +994,6 @@ if (kidsMode) {
     }
   });
 }
-
 // ── Tabs ───────────────────────────────────
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -1078,7 +1003,6 @@ function switchTab(name, btn) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (name === 'rides') fetchWaitTimes();
 }
-
 // ── Live Wait Times ─────────────────────────
 const RIDE_MAP = {
   remy:       s => s.includes('remy'),
@@ -1091,20 +1015,16 @@ const RIDE_MAP = {
   soarin:     s => s.includes('soarin'),
   testtrack:  s => s.includes('test track'),
 };
-
 let waitRefreshTimer = null;
-
 async function fetchWaitTimes() {
   const btn = document.getElementById('wait-refresh-btn');
   const updated = document.getElementById('wait-updated');
   if (btn) { btn.textContent = '↻ Loading…'; btn.disabled = true; }
-
   try {
     const res = await fetch('https://api.themeparks.wiki/v1/entity/47f90d2c-e191-4239-a466-5892ef59a88b/live');
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
     const live = data.liveData || [];
-
     // Build a lookup: rideKey → wait info
     const waitLookup = {};
     for (const [key, matchFn] of Object.entries(RIDE_MAP)) {
@@ -1115,23 +1035,18 @@ async function fetchWaitTimes() {
         waitLookup[key] = { wait, status };
       }
     }
-
     // Update each card
     document.querySelectorAll('#attraction-list .card[data-ride]').forEach(card => {
       const key = card.dataset.ride;
       const info = waitLookup[key];
       const right = card.querySelector('.card-right');
       if (!right) return;
-
       // Remove old badge if present
       const old = right.querySelector('.wait-badge');
       if (old) old.remove();
-
       if (!info) return;
-
       const badge = document.createElement('div');
       badge.className = 'wait-badge';
-
       if (info.status === 'CLOSED' || info.status === 'REFURBISHMENT') {
         badge.textContent = 'Closed';
         badge.classList.add('wait-closed');
@@ -1144,32 +1059,26 @@ async function fetchWaitTimes() {
       }
       right.appendChild(badge);
     });
-
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     if (updated) updated.textContent = `Updated ${now}`;
-
     // Auto-refresh every 5 min
     if (waitRefreshTimer) clearTimeout(waitRefreshTimer);
     waitRefreshTimer = setTimeout(fetchWaitTimes, 5 * 60 * 1000);
-
   } catch (e) {
     if (updated) updated.textContent = 'Could not load wait times';
   } finally {
     if (btn) { btn.textContent = '↻ Refresh'; btn.disabled = false; }
   }
 }
-
 // ── State ──────────────────────────────────
 let chatOpen = false;
 let isThinking = false;
 const conversationHistory = [];
-
 // ── Progress tracker ──────────────────────
 function toggleDone(card) {
   card.classList.toggle('done');
   updateProgress();
 }
-
 function updateProgress() {
   const all  = document.querySelectorAll('#attraction-list .card');
   const done = document.querySelectorAll('#attraction-list .card.done');
@@ -1181,24 +1090,20 @@ function updateProgress() {
   document.getElementById('checklist-count').textContent = `${total} total`;
 }
 updateProgress();
-
 // ── Chat UI ───────────────────────────────
 function toggleChat() {
   chatOpen = !chatOpen;
   const panel = document.getElementById('chat-panel');
   panel.classList.toggle('open', chatOpen);
-
   if (chatOpen) {
     checkApiKey();
     setTimeout(() => document.getElementById('chat-input').focus(), 300);
   }
 }
-
 function checkApiKey() {
   const key = localStorage.getItem('anthropic_api_key');
   document.getElementById('api-key-section').style.display = key ? 'none' : 'block';
 }
-
 function saveApiKey() {
   const val = document.getElementById('api-key-input').value.trim();
   if (!val.startsWith('sk-')) {
@@ -1209,44 +1114,36 @@ function saveApiKey() {
   document.getElementById('api-key-section').style.display = 'none';
   addMessage('claude', 'API key saved! I\'m ready to help. What would you like to do?');
 }
-
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
-
 function handleKey(e) {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
     sendMessage();
   }
 }
-
 function sendSuggestion(btn) {
   document.getElementById('chat-input').value = btn.textContent;
   sendMessage();
 }
-
 function addMessage(role, text) {
   const msgs = document.getElementById('chat-messages');
   const div = document.createElement('div');
   div.className = `msg ${role}`;
-
   const avatar = document.createElement('div');
   avatar.className = `msg-avatar ${role === 'claude' ? 'msg-claude-av' : 'msg-user-av'}`;
   avatar.textContent = role === 'claude' ? '✦' : 'C';
-
   const bubble = document.createElement('div');
   bubble.className = 'msg-bubble';
   bubble.innerHTML = formatMessage(text);
-
   div.appendChild(avatar);
   div.appendChild(bubble);
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
   return div;
 }
-
 function formatMessage(text) {
   // Convert markdown-lite
   return text
@@ -1254,7 +1151,6 @@ function formatMessage(text) {
     .replace(/`(.*?)`/g, '<code style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:11px">$1</code>')
     .split('\n').map(line => `<p>${line}</p>`).join('');
 }
-
 function showTyping() {
   const msgs = document.getElementById('chat-messages');
   const div = document.createElement('div');
@@ -1268,61 +1164,46 @@ function showTyping() {
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
-
 function removeTyping() {
   const el = document.getElementById('typing-indicator');
   if (el) el.remove();
 }
-
 // ── Claude API ────────────────────────────
 async function sendMessage() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   if (!text || isThinking) return;
-
   const key = localStorage.getItem('anthropic_api_key');
   if (!key) {
     document.getElementById('api-key-section').style.display = 'block';
     return;
   }
-
   input.value = '';
   input.style.height = 'auto';
   addMessage('user', text);
-
   // Hide suggestions after first message
   document.getElementById('chat-suggestions').style.display = 'none';
-
   isThinking = true;
   document.getElementById('chat-send').disabled = true;
   showTyping();
-
   // Build context: current page HTML snapshot (light version)
   const pageContext = getPageContext();
-
   conversationHistory.push({ role: 'user', content: text });
-
   const systemPrompt = `You are an EPCOT day planner assistant for the Jones family. You are embedded inside their EPCOT day planner webpage and can make live changes to it.
-
 FAMILY:
 - Caleb Jones (Dad)
 - Erin Jones (Mom, age 18+)
 - Maverick Jones (Age 5)
 - Max Jones (Age 11)
-
 LIGHTNING LANE RESERVATIONS (Wednesday March 25, 2026):
 - Mission: SPACE (LL Multi Pass) — Arrive 1:10–2:10 PM
 - Guardians of the Galaxy: Cosmic Rewind (LL Single Pass) — Arrive 4:45–5:45 PM
 - Soarin' Around the World (LL Multi Pass) — Arrive 5:15–6:15 PM
 - Test Track (LL Multi Pass) — Arrive 6:00–7:00 PM
-
 PARK INFO: EPCOT, Park hours 9 AM–9 PM
-
 GOAL: The family wants to ride Guardians of the Galaxy TWICE.
-
 CURRENT PAGE STATE:
 ${pageContext}
-
 INSTRUCTIONS:
 - Be friendly, concise, and helpful.
 - When the user asks you to make changes to the page (add items, update times, add notes, change text, add new cards, etc.), return valid JavaScript in a \`\`\`javascript code block that manipulates the DOM. The code will be executed directly.
@@ -1332,7 +1213,6 @@ INSTRUCTIONS:
 - Always confirm what change you made after the code block.
 - If it's just a question or conversation, respond naturally without code.
 - Keep responses concise — this is a mobile-friendly chat.`;
-
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -1349,23 +1229,17 @@ INSTRUCTIONS:
         messages: conversationHistory
       })
     });
-
     if (!response.ok) {
       const err = await response.json();
       throw new Error(err.error?.message || `API error ${response.status}`);
     }
-
     const data = await response.json();
     const reply = data.content[0].text;
-
     conversationHistory.push({ role: 'assistant', content: reply });
-
     removeTyping();
-
     // Extract and execute any JavaScript code blocks
     const codeMatch = reply.match(/```javascript\n([\s\S]*?)```/);
     let displayText = reply;
-
     if (codeMatch) {
       try {
         eval(codeMatch[1]);
@@ -1377,11 +1251,9 @@ INSTRUCTIONS:
       // Remove the raw code block from the displayed message
       displayText = reply.replace(/```javascript\n[\s\S]*?```/, '').trim();
     }
-
     if (displayText) {
       addMessage('claude', displayText);
     }
-
   } catch (err) {
     removeTyping();
     let msg = err.message;
@@ -1398,12 +1270,10 @@ INSTRUCTIONS:
     document.getElementById('chat-send').disabled = false;
   }
 }
-
 function getPageContext() {
   // Return a text summary of current page state for Claude
   const done = [...document.querySelectorAll('#attraction-list .card.done')]
     .map(c => c.querySelector('.card-title')?.textContent).filter(Boolean);
-
   const scheduleItems = [...document.querySelectorAll('#day-schedule .tl-card')]
     .map(c => {
       const row = c.closest('.tl-row');
@@ -1411,9 +1281,7 @@ function getPageContext() {
       const title = c.querySelector('.tl-card-title')?.textContent || '';
       return `  ${time}: ${title}`;
     }).join('\n');
-
   return `ATTRACTIONS DONE: ${done.length > 0 ? done.join(', ') : 'none yet'}
-
 CURRENT SCHEDULE:
 ${scheduleItems}`;
 }
