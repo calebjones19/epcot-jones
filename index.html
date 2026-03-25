@@ -453,6 +453,28 @@
   .tab-btn:not(.active):hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
+  /* ── WEATHER TAB ── */
+  .weather-summary {
+    background: linear-gradient(135deg, #003087, #001f6e);
+    border-radius: 12px; padding: 18px 20px; color: #fff; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .weather-summary-icon { font-size: 48px; line-height: 1; }
+  .weather-summary-info { flex: 1; }
+  .weather-summary-temp { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1.1; }
+  .weather-summary-desc { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .weather-summary-detail { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .weather-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
+  .weather-hour-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 8px; text-align: center; transition: border-color 0.2s;
+  }
+  .weather-hour-card.current { border-color: var(--accent); background: rgba(212,136,10,0.05); }
+  .weather-hour-time { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+  .weather-hour-icon { font-size: 24px; margin-bottom: 4px; }
+  .weather-hour-temp { font-size: 18px; font-weight: 700; color: var(--text); }
+  .weather-hour-rain { font-size: 11px; color: #60a5fa; font-weight: 600; margin-top: 2px; }
+  .weather-hour-wind { font-size: 10px; color: var(--muted); margin-top: 2px; }
   /* ── WAIT TIMES ── */
   .wait-bar {
     display: flex; align-items: center; justify-content: space-between;
@@ -493,6 +515,7 @@
     <button class="tab-btn" onclick="switchTab('schedule', this)">📅 Schedule</button>
     <button class="tab-btn" onclick="switchTab('rides', this)">🎢 Rides</button>
     <button class="tab-btn" onclick="switchTab('tips', this)">💡 Tips</button>
+    <button class="tab-btn" onclick="switchTab('weather', this)">🌤️ Weather</button>
   </nav>
   <!-- ─── TAB: LIGHTNING LANE ─── -->
   <div id="tab-panel-ll" class="tab-panel active">
@@ -912,6 +935,20 @@
     </div>
   </div>
   </div><!-- /tab-panel-tips -->
+
+  <!-- ─── TAB: WEATHER ─── -->
+  <div id="tab-panel-weather" class="tab-panel">
+    <div class="section-header">
+      <span class="section-title">Hourly Forecast</span>
+      <div class="section-line"></div>
+      <span class="section-count" id="weather-status">Loading...</span>
+    </div>
+    <div class="weather-summary" id="weather-summary"></div>
+    <div class="weather-grid" id="weather-grid">
+      <div style="text-align:center;padding:40px 0;color:var(--muted);">Fetching forecast from NOAA...</div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:16px;" id="weather-attribution"></p>
+  </div><!-- /tab-panel-weather -->
 </main>
 <footer class="footer">
   Jones Family · EPCOT · Wednesday, March 25, 2026<br>
@@ -1285,6 +1322,150 @@ function getPageContext() {
 CURRENT SCHEDULE:
 ${scheduleItems}`;
 }
+
+// ── Live Weather ──
+(async function updateWeather() {
+  try {
+    const lat = 28.3747, lon = -81.5494;
+    const targetDate = '2026-03-25';
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,precipitation_probability,weather_code,wind_speed_10m,relative_humidity_2m,uv_index&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York&start_date=${targetDate}&end_date=${targetDate}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.hourly) return;
+
+    const hours = data.hourly.time;
+    const temps = data.hourly.temperature_2m;
+    const precip = data.hourly.precipitation_probability;
+    const codes = data.hourly.weather_code;
+    const winds = data.hourly.wind_speed_10m;
+    const humidity = data.hourly.relative_humidity_2m;
+    const uv = data.hourly.uv_index;
+
+    function weatherEmoji(code, hour) {
+      if (code <= 1) return hour >= 18 || hour < 6 ? '🌙' : '☀️';
+      if (code === 2) return '⛅';
+      if (code === 3) return '☁️';
+      if (code >= 51 && code <= 67) return '🌦️';
+      if (code >= 71 && code <= 77) return '🌨️';
+      if (code >= 80 && code <= 82) return '🌧️';
+      if (code >= 95) return '⛈️';
+      return '☁️';
+    }
+
+    function weatherDesc(code) {
+      if (code <= 1) return 'Clear';
+      if (code === 2) return 'Partly Cloudy';
+      if (code === 3) return 'Overcast';
+      if (code >= 51 && code <= 55) return 'Drizzle';
+      if (code >= 56 && code <= 57) return 'Freezing Drizzle';
+      if (code >= 61 && code <= 65) return 'Rain';
+      if (code >= 66 && code <= 67) return 'Freezing Rain';
+      if (code >= 80 && code <= 82) return 'Rain Showers';
+      if (code >= 95) return 'Thunderstorm';
+      return 'Cloudy';
+    }
+
+    function formatHour(h) {
+      if (h === 0) return '12 AM';
+      if (h < 12) return h + ' AM';
+      if (h === 12) return '12 PM';
+      return (h - 12) + ' PM';
+    }
+
+    function parseTime(text) {
+      const match = text.match(/(\d{1,2}):?(\d{2})?\s*(AM|PM)/i);
+      if (!match) return null;
+      let h = parseInt(match[1]);
+      const m = parseInt(match[2] || '0');
+      const ampm = match[3].toUpperCase();
+      if (ampm === 'PM' && h !== 12) h += 12;
+      if (ampm === 'AM' && h === 12) h = 0;
+      return h + m / 60;
+    }
+
+    // Build hourly lookup
+    const hourly = {};
+    hours.forEach((t, i) => {
+      const h = new Date(t).getHours();
+      hourly[h] = { temp: Math.round(temps[i]), precip: precip[i], code: codes[i], wind: Math.round(winds[i]), humidity: Math.round(humidity[i]), uv: uv[i] };
+    });
+
+    // ── Update schedule tab weather ──
+    document.querySelectorAll('.tl-weather').forEach(el => {
+      const timeText = el.parentElement.childNodes[0].textContent.trim();
+      const decimal = parseTime(timeText);
+      if (decimal === null) return;
+      const hour = Math.round(decimal);
+      const w = hourly[hour];
+      if (!w) return;
+      const emoji = weatherEmoji(w.code, hour);
+      let html = `${emoji} ${w.temp}°F`;
+      if (w.precip >= 25) html += `<span class="tl-weather-rain"> ${w.precip}%</span>`;
+      el.innerHTML = html;
+    });
+
+    // Add LIVE badge to first schedule weather
+    const firstWeather = document.querySelector('.tl-weather');
+    if (firstWeather) {
+      const badge = document.createElement('span');
+      badge.textContent = ' LIVE';
+      badge.style.cssText = 'font-size:8px;background:#22c55e;color:#fff;padding:1px 4px;border-radius:4px;margin-left:4px;vertical-align:middle;letter-spacing:0.05em;';
+      firstWeather.appendChild(badge);
+    }
+
+    // ── Populate weather tab ──
+    const now = new Date();
+    const currentHour = now.getHours();
+    const isToday = now.toISOString().slice(0, 10) === targetDate;
+
+    // Summary card — show current or 9 AM conditions
+    const summaryHour = isToday ? currentHour : 9;
+    const sw = hourly[summaryHour] || hourly[9];
+    if (sw) {
+      const hi = Math.max(...Object.values(hourly).map(h => h.temp));
+      const lo = Math.min(...Object.values(hourly).filter((h, i) => i >= 7 && i <= 22).map(h => h.temp));
+      const maxRain = Math.max(...Object.values(hourly).filter((h, i) => i >= 7 && i <= 22).map(h => h.precip));
+      const maxUV = Math.max(...Object.values(hourly).filter((h, i) => i >= 9 && i <= 17).map(h => h.uv));
+      document.getElementById('weather-summary').innerHTML = `
+        <div class="weather-summary-icon">${weatherEmoji(sw.code, summaryHour)}</div>
+        <div class="weather-summary-info">
+          <div class="weather-summary-temp">${sw.temp}°F</div>
+          <div class="weather-summary-desc">${weatherDesc(sw.code)} · ${isToday ? 'Right Now' : 'Forecast for 9 AM'}</div>
+          <div class="weather-summary-detail">High ${hi}° · Low ${lo}° · Wind ${sw.wind} mph · Humidity ${sw.humidity}%</div>
+          <div class="weather-summary-detail">${maxRain >= 25 ? '🌧️ Rain chance up to ' + maxRain + '%' : '☀️ Low rain chance'} · UV Index ${maxUV.toFixed(1)}${maxUV >= 6 ? ' (High — wear sunscreen!)' : maxUV >= 3 ? ' (Moderate)' : ' (Low)'}</div>
+        </div>
+      `;
+    }
+
+    // Hourly cards — show 7 AM to 10 PM (park-relevant hours)
+    let gridHTML = '';
+    for (let h = 7; h <= 22; h++) {
+      const w = hourly[h];
+      if (!w) continue;
+      const isCurrent = isToday && h === currentHour;
+      gridHTML += `
+        <div class="weather-hour-card${isCurrent ? ' current' : ''}">
+          <div class="weather-hour-time">${formatHour(h)}</div>
+          <div class="weather-hour-icon">${weatherEmoji(w.code, h)}</div>
+          <div class="weather-hour-temp">${w.temp}°</div>
+          ${w.precip >= 15 ? `<div class="weather-hour-rain">💧 ${w.precip}%</div>` : ''}
+          <div class="weather-hour-wind">💨 ${w.wind} mph</div>
+        </div>
+      `;
+    }
+    document.getElementById('weather-grid').innerHTML = gridHTML;
+    document.getElementById('weather-status').textContent = '🟢 Live';
+    document.getElementById('weather-status').style.cssText = 'font-size:12px;color:#22c55e;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:2px 9px;';
+    document.getElementById('weather-attribution').textContent = 'Data from Open-Meteo (NOAA/GFS) · Updated on page load · EPCOT, FL';
+
+  } catch(e) {
+    console.log('Weather update failed:', e);
+    const grid = document.getElementById('weather-grid');
+    if (grid) grid.innerHTML = '<div style="text-align:center;padding:40px 0;color:var(--muted);">Could not load forecast. Check your internet connection and refresh.</div>';
+    const status = document.getElementById('weather-status');
+    if (status) { status.textContent = '⚠️ Offline'; status.style.color = 'var(--warn)'; }
+  }
+})();
 </script>
 </body>
 </html>
