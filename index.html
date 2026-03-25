@@ -334,6 +334,28 @@
   .weather-hour-rain { font-size: 12px; color: #60a5fa; font-weight: 600; }
   .weather-hour-wind { font-size: 12px; color: var(--muted); }
   .weather-hour-humidity { font-size: 12px; color: var(--muted); }
+  /* ── LIST FILTERS ── */
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+  }
+  .filter-group {
+    display: flex; gap: 4px; flex-wrap: wrap;
+  }
+  .filter-group + .filter-group {
+    margin-left: 4px; padding-left: 8px; border-left: 1px solid var(--border);
+  }
+  .filter-btn {
+    padding: 5px 12px; border-radius: 16px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); font-size: 11px; font-weight: 500;
+    cursor: pointer; font-family: inherit; transition: all 0.15s; white-space: nowrap;
+  }
+  .filter-btn.active { background: var(--text); border-color: var(--text); color: #fff; }
+  .filter-btn:not(.active):hover { border-color: rgba(0,87,231,0.3); color: var(--text); }
+  .filter-btn.featured { background: var(--accent); border-color: var(--accent); color: #1a1a2e; font-weight: 700; }
+  .filter-btn.featured.active { background: var(--accent); border-color: var(--accent); color: #1a1a2e; box-shadow: 0 2px 8px rgba(255,199,44,0.4); }
+  .filter-btn.featured:not(.active) { background: transparent; border-color: var(--accent); color: var(--accent); font-weight: 700; }
+  .filter-btn.featured:not(.active):hover { background: rgba(255,199,44,0.1); }
+  #progress-bar-wrap { transition: all 0.2s; }
   /* ── WAIT TIMES ── */
   .wait-bar {
     display: flex; align-items: center; justify-content: space-between;
@@ -373,8 +395,7 @@
   <nav class="tab-bar" id="tab-bar">
     <button class="tab-btn active" onclick="switchTab('ll', this)">⚡ Lightning Lane</button>
     <button class="tab-btn" onclick="switchTab('schedule', this)">📅 Schedule</button>
-    <button class="tab-btn" onclick="switchTab('rides', this)">🎢 Rides</button>
-    <button class="tab-btn" onclick="switchTab('tips', this)">💡 Tips</button>
+    <button class="tab-btn" onclick="switchTab('list', this)">📍 List</button>
     <button class="tab-btn" onclick="switchTab('weather', this)">🌤️ Weather</button>
   </nav>
   </div>
@@ -476,6 +497,43 @@
         <span style="color:var(--accent);font-weight:700;flex-shrink:0;">3.</span>
         <span><strong style="color:var(--text)">Standby at park close</strong> — In the last 45 min before 9 PM, standby lines often drop significantly. Head to Guardians at ~8:15 PM and check the posted wait time.</span>
       </div>
+    </div>
+  </div>
+  <!-- ─── PRO TIPS ─── -->
+  <div class="section-header" style="margin-top:32px;">
+    <span class="section-title">Pro Tips</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="tips-grid" id="tips-grid">
+    <div class="tip-card">
+      <div class="tip-card-icon">⚡</div>
+      <div class="tip-card-title">Book next LL immediately</div>
+      <div class="tip-card-body">After tapping into each LL Multi Pass ride, book your next one right away in the app. You can hold one LL at a time (or one every 2 hrs).</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-icon">🌅</div>
+      <div class="tip-card-title">Rope Drop = No Lines</div>
+      <div class="tip-card-body">At 9 AM rope drop, Remy's line is often under 20 min. By 10:30 AM the same ride can be 60+ min.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-icon">🧒</div>
+      <div class="tip-card-title">Maverick (age 5) note</div>
+      <div class="tip-card-body">Maverick meets all height requirements for your booked rides. Confirm at the gate — cast members measure at 40", 42", 44".</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-icon">🗺</div>
+      <div class="tip-card-title">World Showcase opens 11 AM</div>
+      <div class="tip-card-body">Don't head to Norway or France before 11 AM — shops and most pavilions don't open until then.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-icon">🌧</div>
+      <div class="tip-card-title">Afternoon storms possible</div>
+      <div class="tip-card-body">March in Florida: afternoon showers are common but brief. Duck into a ride or pavilion — lines actually get shorter during rain.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-card-icon">💧</div>
+      <div class="tip-card-title">Free water refills</div>
+      <div class="tip-card-body">Any quick-service location will give you free cups of water. Stay hydrated — March can still be warm.</div>
     </div>
   </div>
   </div><!-- /tab-panel-ll -->
@@ -631,24 +689,41 @@
   </div>
   </div><!-- /tab-panel-schedule -->
   <!-- ─── TAB: RIDES ─── -->
-  <div id="tab-panel-rides" class="tab-panel">
+  <div id="tab-panel-list" class="tab-panel">
   <!-- ─── ATTRACTION CHECKLIST ─── -->
   <div class="section-header">
-    <span class="section-title">Your Plan</span>
+    <span class="section-title">Attractions & Food</span>
     <div class="section-line"></div>
-    <span class="section-count" id="checklist-count">9 total</span>
+    <span class="section-count" id="checklist-count">29 total</span>
   </div>
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+  <div id="progress-bar-wrap" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
     <div style="flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;"><div id="progress-fill" class="progress-fill" style="width:0%"></div></div>
     <span id="progress-frac" class="progress-frac" style="font-size:12px;color:var(--muted);white-space:nowrap;">0 / 9</span>
   </div>
-  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Tap any attraction to mark it done.</p>
+  <p id="plan-hint" style="font-size:12px;color:var(--muted);margin-bottom:12px;">Tap any planned attraction to mark it done.</p>
   <div class="wait-bar">
     <span id="wait-updated" style="font-size:11px;">Wait times not loaded yet</span>
     <button class="wait-refresh" id="wait-refresh-btn" onclick="fetchWaitTimes()">↻ Refresh</button>
   </div>
+  <div class="filter-bar">
+    <div class="filter-group" id="plan-filter">
+      <button class="filter-btn featured active" onclick="filterList('plan', 'plan', this)">Your Plan</button>
+    </div>
+    <div class="filter-group" id="area-filters">
+      <button class="filter-btn" onclick="filterList('area', 'all', this)">All Areas</button>
+      <button class="filter-btn" onclick="filterList('area', 'celebration', this)">World Celebration</button>
+      <button class="filter-btn" onclick="filterList('area', 'discovery', this)">World Discovery</button>
+      <button class="filter-btn" onclick="filterList('area', 'nature', this)">World Nature</button>
+      <button class="filter-btn" onclick="filterList('area', 'showcase', this)">World Showcase</button>
+    </div>
+    <div class="filter-group" id="type-filters">
+      <button class="filter-btn" onclick="filterList('type', 'all', this)">All</button>
+      <button class="filter-btn" onclick="filterList('type', 'ride', this)">Rides</button>
+      <button class="filter-btn" onclick="filterList('type', 'food', this)">Food</button>
+    </div>
+  </div>
   <div id="attraction-list">
-    <div class="card" data-ride="remy" onclick="toggleDone(this)">
+    <div class="card" data-ride="remy" data-area="showcase" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🐭</div>
       <div class="card-body">
         <div class="card-title">Remy's Ratatouille Adventure</div>
@@ -660,7 +735,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-    <div class="card" data-ride="frozen" onclick="toggleDone(this)">
+    <div class="card" data-ride="frozen" data-area="showcase" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">❄️</div>
       <div class="card-body">
         <div class="card-title">Frozen Ever After</div>
@@ -673,7 +748,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-    <div class="card" data-ride="spaceship" onclick="toggleDone(this)">
+    <div class="card" data-ride="spaceship" data-area="celebration" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🌐</div>
       <div class="card-body">
         <div class="card-title">Spaceship Earth</div>
@@ -685,7 +760,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-    <div class="card" data-ride="journey" onclick="toggleDone(this)">
+    <div class="card" data-ride="journey" data-area="discovery" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">💧</div>
       <div class="card-body">
         <div class="card-title">Journey of Water — Moana</div>
@@ -697,7 +772,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-    <div class="card" data-ride="land" onclick="toggleDone(this)">
+    <div class="card" data-ride="land" data-area="nature" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🌿</div>
       <div class="card-body">
         <div class="card-title">Living with the Land</div>
@@ -709,7 +784,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-    <div class="card" data-ride="mission" onclick="toggleDone(this)">
+    <div class="card" data-ride="mission" data-area="discovery" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🛸</div>
       <div class="card-body">
         <div class="card-title">Mission: SPACE</div>
@@ -721,7 +796,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-    <div class="card" data-ride="guardians" onclick="toggleDone(this)">
+    <div class="card" data-ride="guardians" data-area="discovery" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🚀</div>
       <div class="card-body">
         <div class="card-title">Guardians of the Galaxy: Cosmic Rewind</div>
@@ -734,7 +809,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-    <div class="card" data-ride="soarin" onclick="toggleDone(this)">
+    <div class="card" data-ride="soarin" data-area="nature" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🌍</div>
       <div class="card-body">
         <div class="card-title">Soarin' Around the World</div>
@@ -746,7 +821,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-    <div class="card" data-ride="testtrack" onclick="toggleDone(this)">
+    <div class="card" data-ride="testtrack" data-area="discovery" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🏎</div>
       <div class="card-body">
         <div class="card-title">Test Track</div>
@@ -758,16 +833,7 @@
       </div>
       <div class="card-right"><div class="check-circle">✓</div></div>
     </div>
-  </div>
-
-  <div class="section-header" style="margin-top:32px;">
-    <span class="section-title">Other EPCOT Rides</span>
-    <div class="section-line"></div>
-    <span class="section-count" id="other-rides-count">10 more</span>
-  </div>
-  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Not on the plan, but here if you have time. Wait times update with your planned rides.</p>
-  <div id="other-rides-list">
-    <div class="card" data-ride="figment" style="cursor:default;">
+    <div class="card" data-ride="figment" data-area="celebration" data-type="ride" style="cursor:default;">
       <div class="card-icon">🐉</div>
       <div class="card-body">
         <div class="card-title">Journey Into Imagination with Figment</div>
@@ -779,7 +845,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="nemo" style="cursor:default;">
+    <div class="card" data-ride="nemo" data-area="nature" data-type="ride" style="cursor:default;">
       <div class="card-icon">🐠</div>
       <div class="card-body">
         <div class="card-title">The Seas with Nemo & Friends</div>
@@ -792,7 +858,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="turtletalk" style="cursor:default;">
+    <div class="card" data-ride="turtletalk" data-area="nature" data-type="ride" style="cursor:default;">
       <div class="card-icon">🐢</div>
       <div class="card-body">
         <div class="card-title">Turtle Talk with Crush</div>
@@ -805,7 +871,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="disney_discovery" style="cursor:default;">
+    <div class="card" data-ride="disney_discovery" data-area="celebration" data-type="ride" style="cursor:default;">
       <div class="card-icon">🎬</div>
       <div class="card-body">
         <div class="card-title">Disney & Pixar Short Film Festival</div>
@@ -817,7 +883,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="gran_fiesta" style="cursor:default;">
+    <div class="card" data-ride="gran_fiesta" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🎸</div>
       <div class="card-body">
         <div class="card-title">Gran Fiesta Tour Starring The Three Caballeros</div>
@@ -830,7 +896,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="reflections" style="cursor:default;">
+    <div class="card" data-ride="reflections" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🇨🇳</div>
       <div class="card-body">
         <div class="card-title">Reflections of China</div>
@@ -842,7 +908,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="canada_far" style="cursor:default;">
+    <div class="card" data-ride="canada_far" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🇨🇦</div>
       <div class="card-body">
         <div class="card-title">Canada Far and Wide</div>
@@ -854,7 +920,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="impressions" style="cursor:default;">
+    <div class="card" data-ride="impressions" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🇫🇷</div>
       <div class="card-body">
         <div class="card-title">Impressions de France</div>
@@ -866,7 +932,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="american_adventure" style="cursor:default;">
+    <div class="card" data-ride="american_adventure" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🇺🇸</div>
       <div class="card-body">
         <div class="card-title">The American Adventure</div>
@@ -878,7 +944,7 @@
       </div>
       <div class="card-right"></div>
     </div>
-    <div class="card" data-ride="awesome_planet" style="cursor:default;">
+    <div class="card" data-ride="awesome_planet" data-area="nature" data-type="ride" style="cursor:default;">
       <div class="card-icon">🌎</div>
       <div class="card-body">
         <div class="card-title">Awesome Planet</div>
@@ -890,48 +956,98 @@
       </div>
       <div class="card-right"></div>
     </div>
+    <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
+      <div class="card-icon">🦅</div>
+      <div class="card-body">
+        <div class="card-title">Regal Eagle Smokehouse</div>
+        <div class="card-meta">The American Adventure · Quick Service · BBQ, burgers, salads</div>
+        <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
+      <div class="card-icon">🌮</div>
+      <div class="card-body">
+        <div class="card-title">La Hacienda de San Angel</div>
+        <div class="card-meta">Mexico Pavilion · Table Service · Lakeside Mexican dining</div>
+        <div class="card-tags"><span class="tag tag-ll-single">Table Service</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
+      <div class="card-icon">🍝</div>
+      <div class="card-body">
+        <div class="card-title">Tutto Gusto Wine Cellar</div>
+        <div class="card-meta">Italy Pavilion · Table Service · Small plates, wine, Italian tapas</div>
+        <div class="card-tags"><span class="tag tag-ll-single">Table Service</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
+      <div class="card-icon">🥐</div>
+      <div class="card-body">
+        <div class="card-title">Les Halles Boulangerie-Patisserie</div>
+        <div class="card-meta">France Pavilion · Quick Service · Pastries, sandwiches, quiche</div>
+        <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
+      <div class="card-icon">🍣</div>
+      <div class="card-body">
+        <div class="card-title">Katsura Grill</div>
+        <div class="card-meta">Japan Pavilion · Quick Service · Sushi, ramen, teriyaki</div>
+        <div class="card-tags"><span class="tag tag-free">Quick Service</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
+      <div class="card-icon">🍗</div>
+      <div class="card-body">
+        <div class="card-title">Chefs de France</div>
+        <div class="card-meta">France Pavilion · Table Service · Classic French cuisine</div>
+        <div class="card-tags"><span class="tag tag-ll-single">Table Service</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
+      <div class="card-icon">🧇</div>
+      <div class="card-body">
+        <div class="card-title">Kringla Bakeri og Kafe</div>
+        <div class="card-meta">Norway Pavilion · Quick Service · School bread, waffles, pastries</div>
+        <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="nature" data-type="food" style="cursor:default;">
+      <div class="card-icon">🥗</div>
+      <div class="card-body">
+        <div class="card-title">Sunshine Seasons</div>
+        <div class="card-meta">The Land · Quick Service · Varied menu — Asian, BBQ, salads, bakery</div>
+        <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="celebration" data-type="food" style="cursor:default;">
+      <div class="card-icon">☕</div>
+      <div class="card-body">
+        <div class="card-title">Connections Cafe</div>
+        <div class="card-meta">Near Spaceship Earth · Quick Service · Starbucks, pizza, burgers, salads</div>
+        <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
+    <div class="card" data-area="discovery" data-type="food" style="cursor:default;">
+      <div class="card-icon">🍔</div>
+      <div class="card-body">
+        <div class="card-title">Space 220</div>
+        <div class="card-meta">World Discovery · Table Service · Space-themed dining with simulated elevator to orbit</div>
+        <div class="card-tags"><span class="tag tag-ll-single">Table Service</span><span class="tag tag-must">Unique Experience</span></div>
+      </div>
+      <div class="card-right"></div>
+    </div>
   </div>
-  </div><!-- /tab-panel-rides -->
-  <!-- ─── TAB: TIPS ─── -->
-  <div id="tab-panel-tips" class="tab-panel">
-  <!-- ─── TIPS ─── -->
-  <div class="section-header">
-    <span class="section-title">Pro Tips</span>
-    <div class="section-line"></div>
-  </div>
-  <div class="tips-grid" id="tips-grid">
-    <div class="tip-card">
-      <div class="tip-card-icon">⚡</div>
-      <div class="tip-card-title">Book next LL immediately</div>
-      <div class="tip-card-body">After tapping into each LL Multi Pass ride, book your next one right away in the app. You can hold one LL at a time (or one every 2 hrs).</div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-card-icon">🌅</div>
-      <div class="tip-card-title">Rope Drop = No Lines</div>
-      <div class="tip-card-body">At 9 AM rope drop, Remy's line is often under 20 min. By 10:30 AM the same ride can be 60+ min.</div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-card-icon">🧒</div>
-      <div class="tip-card-title">Maverick (age 5) note</div>
-      <div class="tip-card-body">Maverick meets all height requirements for your booked rides. Confirm at the gate — cast members measure at 40", 42", 44".</div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-card-icon">🗺</div>
-      <div class="tip-card-title">World Showcase opens 11 AM</div>
-      <div class="tip-card-body">Don't head to Norway or France before 11 AM — shops and most pavilions don't open until then.</div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-card-icon">🌧</div>
-      <div class="tip-card-title">Afternoon storms possible</div>
-      <div class="tip-card-body">March in Florida: afternoon showers are common but brief. Duck into a ride or pavilion — lines actually get shorter during rain.</div>
-    </div>
-    <div class="tip-card">
-      <div class="tip-card-icon">💧</div>
-      <div class="tip-card-title">Free water refills</div>
-      <div class="tip-card-body">Any quick-service location will give you free cups of water. Stay hydrated — March can still be warm.</div>
-    </div>
-  </div>
-  </div><!-- /tab-panel-tips -->
+  </div><!-- /tab-panel-list -->
 
   <!-- ─── TAB: WEATHER ─── -->
   <div id="tab-panel-weather" class="tab-panel">
@@ -968,7 +1084,7 @@ function switchTab(name, btn) {
   document.getElementById('tab-panel-' + name).classList.add('active');
   btn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (name === 'rides') fetchWaitTimes();
+  if (name === 'list') fetchWaitTimes();
 }
 // ── Live Wait Times ─────────────────────────
 const RIDE_MAP = {
@@ -1055,16 +1171,74 @@ function toggleDone(card) {
   updateProgress();
 }
 function updateProgress() {
-  const all  = document.querySelectorAll('#attraction-list .card');
-  const done = document.querySelectorAll('#attraction-list .card.done');
+  const all  = document.querySelectorAll('#attraction-list .card[data-plan="true"]');
+  const done = document.querySelectorAll('#attraction-list .card[data-plan="true"].done');
   const total = all.length;
   const count = done.length;
   const pct   = total ? Math.round((count / total) * 100) : 0;
   document.getElementById('progress-frac').textContent = `${count} / ${total}`;
   document.getElementById('progress-fill').style.width  = pct + '%';
-  document.getElementById('checklist-count').textContent = `${total} total`;
 }
 updateProgress();
+// ── List Filters ──
+let activePlanFilter = true; // start with "Your Plan" active
+let activeAreaFilter = 'all';
+let activeTypeFilter = 'all';
+function filterList(filterType, value, btn) {
+  if (filterType === 'plan') {
+    // Toggle plan filter on — deactivate area/type
+    activePlanFilter = true;
+    activeAreaFilter = 'all';
+    activeTypeFilter = 'all';
+    document.querySelectorAll('#area-filters .filter-btn, #type-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#plan-filter .filter-btn').forEach(b => b.classList.add('active'));
+  } else {
+    // Clicking area or type deactivates plan filter
+    activePlanFilter = false;
+    document.querySelectorAll('#plan-filter .filter-btn').forEach(b => b.classList.remove('active'));
+    if (filterType === 'area') {
+      activeAreaFilter = value;
+      document.querySelectorAll('#area-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    } else {
+      activeTypeFilter = value;
+      document.querySelectorAll('#type-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    }
+    btn.classList.add('active');
+    // Auto-activate "All Areas" and "All" if not set
+    if (filterType === 'area' && !document.querySelector('#type-filters .filter-btn.active')) {
+      document.querySelector('#type-filters .filter-btn').classList.add('active');
+      activeTypeFilter = 'all';
+    }
+    if (filterType === 'type' && !document.querySelector('#area-filters .filter-btn.active')) {
+      document.querySelector('#area-filters .filter-btn').classList.add('active');
+      activeAreaFilter = 'all';
+    }
+  }
+  applyFilters();
+}
+function applyFilters() {
+  const cards = document.querySelectorAll('#attraction-list .card');
+  let shown = 0;
+  cards.forEach(card => {
+    if (activePlanFilter) {
+      card.style.display = card.dataset.plan === 'true' ? '' : 'none';
+    } else {
+      const area = card.dataset.area || '';
+      const type = card.dataset.type || '';
+      const areaMatch = activeAreaFilter === 'all' || area === activeAreaFilter;
+      const typeMatch = activeTypeFilter === 'all' || type === activeTypeFilter;
+      card.style.display = (areaMatch && typeMatch) ? '' : 'none';
+    }
+    if (card.style.display !== 'none') shown++;
+  });
+  document.getElementById('checklist-count').textContent = shown + ' shown';
+  // Show/hide progress bar and hint based on plan filter
+  const progressWrap = document.getElementById('progress-bar-wrap');
+  const planHint = document.getElementById('plan-hint');
+  if (progressWrap) progressWrap.style.display = activePlanFilter ? '' : 'none';
+  if (planHint) planHint.style.display = activePlanFilter ? '' : 'none';
+}
+applyFilters();
 // ── Live Weather ──
 (async function updateWeather() {
   try {
