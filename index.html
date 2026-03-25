@@ -464,17 +464,23 @@
   .weather-summary-temp { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1.1; }
   .weather-summary-desc { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
   .weather-summary-detail { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; }
-  .weather-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
+  .weather-grid { display: flex; flex-direction: column; gap: 0; }
   .weather-hour-card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 12px 8px; text-align: center; transition: border-color 0.2s;
+    display: flex; align-items: center; gap: 14px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 12px 14px; transition: background 0.2s;
   }
-  .weather-hour-card.current { border-color: var(--accent); background: rgba(212,136,10,0.05); }
-  .weather-hour-time { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
-  .weather-hour-icon { font-size: 24px; margin-bottom: 4px; }
-  .weather-hour-temp { font-size: 18px; font-weight: 700; color: var(--text); }
-  .weather-hour-rain { font-size: 11px; color: #60a5fa; font-weight: 600; margin-top: 2px; }
-  .weather-hour-wind { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .weather-hour-card:first-child { border-radius: 10px 10px 0 0; }
+  .weather-hour-card:last-child { border-radius: 0 0 10px 10px; border-bottom: none; }
+  .weather-hour-card:only-child { border-radius: 10px; }
+  .weather-hour-card.current { background: rgba(212,136,10,0.06); border-left: 3px solid var(--accent); }
+  .weather-hour-time { font-size: 13px; font-weight: 600; color: var(--muted); width: 55px; flex-shrink: 0; }
+  .weather-hour-icon { font-size: 22px; flex-shrink: 0; width: 30px; text-align: center; }
+  .weather-hour-temp { font-size: 17px; font-weight: 700; color: var(--text); width: 45px; flex-shrink: 0; }
+  .weather-hour-details { display: flex; gap: 10px; flex: 1; align-items: center; }
+  .weather-hour-rain { font-size: 12px; color: #60a5fa; font-weight: 600; }
+  .weather-hour-wind { font-size: 12px; color: var(--muted); }
+  .weather-hour-humidity { font-size: 12px; color: var(--muted); }
   /* ── WAIT TIMES ── */
   .wait-bar {
     display: flex; align-items: center; justify-content: space-between;
@@ -1466,8 +1472,10 @@ ${scheduleItems}`;
           <div class="weather-hour-time">${formatHour(h)}</div>
           <div class="weather-hour-icon">${weatherEmoji(w.code, h)}</div>
           <div class="weather-hour-temp">${w.temp}°</div>
-          ${w.precip >= 15 ? `<div class="weather-hour-rain">💧 ${w.precip}%</div>` : ''}
-          <div class="weather-hour-wind">💨 ${w.wind} mph</div>
+          <div class="weather-hour-details">
+            ${w.precip >= 15 ? `<span class="weather-hour-rain">💧 ${w.precip}%</span>` : ''}
+            <span class="weather-hour-wind">💨 ${w.wind} mph</span>
+          </div>
         </div>
       `;
     }
