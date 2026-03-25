@@ -346,6 +346,19 @@
   .filter-select:focus { outline: none; border-color: var(--accent); color: var(--text); }
   .filter-select.has-value { border-color: var(--text); color: var(--text); font-weight: 600; }
   #progress-bar-wrap { transition: all 0.2s; }
+  .wish-btn {
+    background: none; border: none; font-size: 20px; cursor: pointer;
+    color: var(--muted); transition: all 0.15s; padding: 4px; line-height: 1;
+  }
+  .wish-btn:hover { color: var(--accent); transform: scale(1.15); }
+  .card.wishlisted .wish-btn { color: var(--accent); }
+  .planned-badge {
+    font-size: 10px; font-weight: 700; color: var(--ll-multi); background: rgba(0,87,231,0.1);
+    border: 1px solid rgba(0,87,231,0.2); border-radius: 10px; padding: 2px 8px;
+    white-space: nowrap; display: none;
+  }
+  #wish-list-section { margin-top: 28px; }
+  #wish-list-section .card { border-left: 3px solid var(--accent); }
   /* ── WAIT TIMES ── */
   .wait-bar {
     display: flex; align-items: center; justify-content: space-between;
@@ -721,7 +734,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="frozen" data-area="showcase" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">❄️</div>
@@ -734,7 +747,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="spaceship" data-area="celebration" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🌐</div>
@@ -746,7 +759,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="journey" data-area="discovery" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">💧</div>
@@ -758,7 +771,7 @@
           <span class="tag tag-must">Kids Love It</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="land" data-area="nature" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🌿</div>
@@ -770,7 +783,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="mission" data-area="discovery" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🛸</div>
@@ -782,7 +795,7 @@
           <span class="tag tag-height">44" (Orange) / No req (Green)</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="guardians" data-area="discovery" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🚀</div>
@@ -795,7 +808,7 @@
           <span class="tag tag-height">42" min</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="soarin" data-area="nature" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🌍</div>
@@ -807,7 +820,7 @@
           <span class="tag tag-height">40" min</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="testtrack" data-area="discovery" data-type="ride" data-plan="true" onclick="toggleDone(this)">
       <div class="card-icon">🏎</div>
@@ -819,7 +832,7 @@
           <span class="tag tag-height">40" min</span>
         </div>
       </div>
-      <div class="card-right"><div class="check-circle">✓</div></div>
+      <div class="card-right"><div class="check-circle">✓</div><span class="planned-badge">Planned</span></div>
     </div>
     <div class="card" data-ride="figment" data-area="celebration" data-type="ride" style="cursor:default;">
       <div class="card-icon">🐉</div>
@@ -831,7 +844,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="nemo" data-area="nature" data-type="ride" style="cursor:default;">
       <div class="card-icon">🐠</div>
@@ -844,7 +857,7 @@
           <span class="tag tag-must">Kids Love It</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="turtletalk" data-area="nature" data-type="ride" style="cursor:default;">
       <div class="card-icon">🐢</div>
@@ -857,7 +870,7 @@
           <span class="tag tag-must">Kids Love It</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="disney_discovery" data-area="celebration" data-type="ride" style="cursor:default;">
       <div class="card-icon">🎬</div>
@@ -869,7 +882,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="gran_fiesta" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🎸</div>
@@ -882,7 +895,7 @@
           <span class="tag tag-must">Kids Love It</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="reflections" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🇨🇳</div>
@@ -894,7 +907,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="canada_far" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🇨🇦</div>
@@ -906,7 +919,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="impressions" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🇫🇷</div>
@@ -918,7 +931,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="american_adventure" data-area="showcase" data-type="ride" style="cursor:default;">
       <div class="card-icon">🇺🇸</div>
@@ -930,7 +943,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-ride="awesome_planet" data-area="nature" data-type="ride" style="cursor:default;">
       <div class="card-icon">🌎</div>
@@ -942,7 +955,7 @@
           <span class="tag tag-free">No height req</span>
         </div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
       <div class="card-icon">🦅</div>
@@ -951,7 +964,7 @@
         <div class="card-meta">The American Adventure · Quick Service · BBQ, burgers, salads</div>
         <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
       <div class="card-icon">🌮</div>
@@ -960,7 +973,7 @@
         <div class="card-meta">Mexico Pavilion · Table Service · Lakeside Mexican dining</div>
         <div class="card-tags"><span class="tag tag-ll-single">Table Service</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
       <div class="card-icon">🍝</div>
@@ -969,7 +982,7 @@
         <div class="card-meta">Italy Pavilion · Table Service · Small plates, wine, Italian tapas</div>
         <div class="card-tags"><span class="tag tag-ll-single">Table Service</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
       <div class="card-icon">🥐</div>
@@ -978,7 +991,7 @@
         <div class="card-meta">France Pavilion · Quick Service · Pastries, sandwiches, quiche</div>
         <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
       <div class="card-icon">🍣</div>
@@ -987,7 +1000,7 @@
         <div class="card-meta">Japan Pavilion · Quick Service · Sushi, ramen, teriyaki</div>
         <div class="card-tags"><span class="tag tag-free">Quick Service</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
       <div class="card-icon">🍗</div>
@@ -996,7 +1009,7 @@
         <div class="card-meta">France Pavilion · Table Service · Classic French cuisine</div>
         <div class="card-tags"><span class="tag tag-ll-single">Table Service</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="showcase" data-type="food" style="cursor:default;">
       <div class="card-icon">🧇</div>
@@ -1005,7 +1018,7 @@
         <div class="card-meta">Norway Pavilion · Quick Service · School bread, waffles, pastries</div>
         <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="nature" data-type="food" style="cursor:default;">
       <div class="card-icon">🥗</div>
@@ -1014,7 +1027,7 @@
         <div class="card-meta">The Land · Quick Service · Varied menu — Asian, BBQ, salads, bakery</div>
         <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="celebration" data-type="food" style="cursor:default;">
       <div class="card-icon">☕</div>
@@ -1023,7 +1036,7 @@
         <div class="card-meta">Near Spaceship Earth · Quick Service · Starbucks, pizza, burgers, salads</div>
         <div class="card-tags"><span class="tag tag-free">Quick Service</span><span class="tag tag-must">Kid Friendly</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
     <div class="card" data-area="discovery" data-type="food" style="cursor:default;">
       <div class="card-icon">🍔</div>
@@ -1032,8 +1045,22 @@
         <div class="card-meta">World Discovery · Table Service · Space-themed dining with simulated elevator to orbit</div>
         <div class="card-tags"><span class="tag tag-ll-single">Table Service</span><span class="tag tag-must">Unique Experience</span></div>
       </div>
-      <div class="card-right"></div>
+      <div class="card-right"><button class="wish-btn" onclick="event.stopPropagation();toggleWish(this.closest('.card'))">☆</button></div>
     </div>
+  </div>
+  <div id="wish-list-section" style="display:none;">
+    <div class="section-header">
+      <span class="section-title">Wish List</span>
+      <div class="section-line"></div>
+      <span class="section-count" id="wish-count">0</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Tap ☆ on any ride or food spot to add it here.</p>
+    <div class="filter-bar" id="wish-filters">
+      <button class="filter-btn active" onclick="filterWishList('all', this)">All</button>
+      <button class="filter-btn" onclick="filterWishList('ride', this)">Rides</button>
+      <button class="filter-btn" onclick="filterWishList('food', this)">Food</button>
+    </div>
+    <div id="wish-list"></div>
   </div>
   </div><!-- /tab-panel-list -->
 
@@ -1155,6 +1182,7 @@ async function fetchWaitTimes() {
 }
 // ── Progress tracker ──────────────────────
 function toggleDone(card) {
+  if (!activePlanFilter) return;
   card.classList.toggle('done');
   updateProgress();
 }
@@ -1190,6 +1218,12 @@ function dropdownChanged() {
   typeSelect.classList.toggle('has-value', typeSelect.value !== 'all');
   applyFilters();
 }
+function toggleWish(card) {
+  card.classList.toggle('wishlisted');
+  const btn = card.querySelector('.wish-btn');
+  if (btn) btn.textContent = card.classList.contains('wishlisted') ? '★' : '☆';
+  applyFilters();
+}
 function applyFilters() {
   const cards = document.querySelectorAll('#attraction-list .card');
   const areaVal = areaSelect.value;
@@ -1206,12 +1240,58 @@ function applyFilters() {
       card.style.display = (areaMatch && typeMatch) ? '' : 'none';
     }
     if (card.style.display !== 'none') shown++;
+    // Plan cards: show check circle in My Plan, show Planned badge in other views
+    const circle = card.querySelector('.check-circle');
+    const badge = card.querySelector('.planned-badge');
+    if (circle && badge) {
+      circle.style.display = activePlanFilter ? '' : 'none';
+      badge.style.display = activePlanFilter ? 'none' : 'inline-block';
+    }
   });
   document.getElementById('checklist-count').textContent = shown + ' shown';
   const progressWrap = document.getElementById('progress-bar-wrap');
   const planHint = document.getElementById('plan-hint');
   if (progressWrap) progressWrap.style.display = activePlanFilter ? '' : 'none';
   if (planHint) planHint.style.display = activePlanFilter ? '' : 'none';
+  // Wish list
+  renderWishList();
+}
+let wishTypeFilter = 'all';
+function filterWishList(value, btn) {
+  wishTypeFilter = value;
+  document.querySelectorAll('#wish-filters .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderWishList();
+}
+function renderWishList() {
+  const wishSection = document.getElementById('wish-list-section');
+  const wishList = document.getElementById('wish-list');
+  const wishCount = document.getElementById('wish-count');
+  const wishedCards = document.querySelectorAll('#attraction-list .card.wishlisted');
+  if (activePlanFilter && wishedCards.length > 0) {
+    wishSection.style.display = '';
+    wishList.innerHTML = '';
+    let visibleCount = 0;
+    wishedCards.forEach(orig => {
+      const type = orig.dataset.type || '';
+      if (wishTypeFilter !== 'all' && type !== wishTypeFilter) return;
+      visibleCount++;
+      const clone = orig.cloneNode(true);
+      clone.style.display = '';
+      clone.querySelector('.wish-btn').onclick = function(e) {
+        e.stopPropagation();
+        orig.classList.remove('wishlisted');
+        orig.querySelector('.wish-btn').textContent = '☆';
+        applyFilters();
+      };
+      wishList.appendChild(clone);
+    });
+    wishCount.textContent = visibleCount + ' of ' + wishedCards.length;
+  } else {
+    wishSection.style.display = 'none';
+    wishList.innerHTML = '';
+    wishCount.textContent = '0';
+  }
 }
 applyFilters();
 // ── Live Weather ──
