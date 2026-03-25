@@ -1429,9 +1429,8 @@ ${scheduleItems}`;
     }
 
     // ── Populate weather tab ──
-    const now = new Date();
     const currentHour = now.getHours();
-    const isToday = now.toISOString().slice(0, 10) === targetDate;
+    const isToday = todayStr === targetDate;
 
     // Summary card — show current or 9 AM conditions
     const summaryHour = isToday ? currentHour : 9;
